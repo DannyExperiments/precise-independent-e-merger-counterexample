@@ -1,0 +1,18 @@
+cff-version: "1.2.0"
+message: "If you cite this release, please cite the version-specific DOI."
+title: "A precise independent e-merger outside martingale mixtures"
+type: software
+authors:
+  - name: "DannyExperiments"
+doi: "10.5281/zenodo.24571976"
+version: "1.0.0"
+date-released: "2026-11-27"
+repository-code: "https://github.com/DannyExperiments/precise-independent-e-merger-counterexample"
+url: "https://github.com/DannyExperiments/precise-independent-e-merger-counterexample/releases/tag/v1.0.0"
+abstract: "A continuous precise merger of three independent e-values derived from the known Lugano selector, with an exact four-point lower bound separating it from generalized martingale mixtures."
+keywords:
+  - "e-values"
+  - "independent e-merging"
+  - "martingale merging"
+  - "pointwise domination"
+  - "Lugano process"

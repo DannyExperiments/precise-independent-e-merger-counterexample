@@ -1,0 +1,7 @@
+'MergerWitness.quantitativeGap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MergerWitness.remainderIdentity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MergerWitness.fourValues' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MergerWitness.smallBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MergerWitness.firstWagerZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MergerWitness.positiveFactor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MergerWitness.survivesZeroFirst' depends on axioms: [propext, Classical.choice, Quot.sound]

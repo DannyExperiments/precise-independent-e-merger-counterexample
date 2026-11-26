@@ -1,0 +1,29 @@
+{
+  "title": "A precise independent e-merger outside martingale mixtures",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "DannyExperiments"
+    }
+  ],
+  "keywords": [
+    "e-values",
+    "independent e-merging",
+    "martingale merging",
+    "pointwise domination",
+    "Lugano process"
+  ],
+  "description": "<p>This release uses the known Lugano (Araújo–Feix/Baumeler–Wolf) selector to construct a continuous, precise merger of three independent e-values outside the generalized martingale mixtures studied by Vovk and Wang. It addresses their Question 4. The merger is nonmonotone.</p><p>Each weight depends only on the other two inputs. Independence therefore factors the expectation, yielding mean one whenever all three input means equal one. Four rational input vectors have merger values 1, 0, 0, 0. For any adaptive-order betting mixture, the all-small evaluation is at most one quarter plus four times the sum of the three other evaluations. This gives a maximum-error lower bound of 3/52 on the four points and excludes pointwise limits. The known exact-merger admissibility argument excludes pointwise domination.</p><p>Zhang's earlier nondomination example does not have precision. The literature audit distinguishes the Boolean selector's prior provenance and the separate increasing-merger question. Exact rational replay and a rotating offline explorer accompany the proof. The partial Lean 4.30.0 certificate checks finite algebra and rational betting inequalities. Internally reviewed, not peer reviewed.</p><p>Under human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and its research packet. OpenAI Codex independently reviewed the mathematics and developed the partial Lean certificate. GPT-6.2 Sol (OpenAI) checked the literature, derived the quantitative bound, and prepared the manuscript, replay and illustrations. DannyExperiments maintains the repository and is the preferred citation identity. No AI system is proposed as an author.</p><p>Release v1.0.0. https://github.com/DannyExperiments/precise-independent-e-merger-counterexample/releases/tag/v1.0.0</p>",
+  "license": "other-closed",
+  "notes": "All rights reserved. Publicly downloadable files are supplied without a repository-wide reuse license.",
+  "publication_date": "2026-11-27",
+  "version": "1.0.0",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DannyExperiments/precise-independent-e-merger-counterexample/releases/tag/v1.0.0",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
+}

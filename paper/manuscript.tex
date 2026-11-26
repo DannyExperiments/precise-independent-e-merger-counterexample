@@ -1,0 +1,207 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={A precise independent e-merger outside martingale mixtures}}
+\DeclareFontShape{OT1}{cmr}{bx}{n}{<-> cmbx10}{}
+\DeclareMathSizes{8}{8}{8}{8}
+\DeclareMathSizes{9}{9}{8}{8}
+\DeclareMathSizes{10.95}{10.95}{8}{8}
+\newtheorem{theorem}{Theorem}
+\title{A precise independent e-merger outside martingale mixtures}
+\date{}
+\begin{document}
+\begin{abstract}
+A continuous nonmonotone merger of three independent e-values is precise,
+yet lies outside the generalized martingale mixtures of Vovk and Wang.
+The construction applies the known Ara\'ujo--Feix/Baumeler--Wolf Boolean
+selector to the statistical setting. Four rational inputs give a linear
+constraint on every adaptive-order wealth mixture and separate the
+example by at least \(3/52\) in maximum error on these inputs.
+Precision also excludes pointwise domination by such a mixture.
+This answers Question 4 of Vovk and Wang.
+\end{abstract}
+\maketitle
+
+\section{Definitions and result}
+
+An e-variable is a nonnegative random variable \(E\) with
+\(\mathbb E E\leq1\). An independent e-merger is a Borel function
+\(F:[0,\infty)^K\to[0,\infty)\) such that
+\(\mathbb E F(E_1,\ldots,E_K)\leq1\) whenever the \(E_i\) are independent
+e-variables. It is precise if the output has mean one whenever all
+input means are one. We allow each input to have its own law.
+
+We use the generalized martingale merging class of
+Vovk and Wang \cite[\S6, eqs.~(18)--(19)]{vw}.
+A strategy starts with capital \(c\in[0,1]\).
+At each step it picks an unread index and a fraction \(t\in[0,1]\)
+using the revealed history. Reading \(x_i\) multiplies its wealth
+by \(1-t+tx_i\). Each input is read exactly once.
+A generalized martingale merger \(M\) averages terminal wealth under a
+probability law fixed across input vectors. The law may couple the
+reading and betting rules. Their Theorem 3 gives validity of every
+such mixture. Their Section 7 Question 4 asks whether every precise
+independent e-merger has this representation.
+
+\begin{theorem}
+There is a continuous precise independent e-merger \(F\) on three
+inputs such that no generalized martingale merger dominates it
+pointwise. For every such mixture \(M\), the maximum absolute
+error from \(F\) on the four inputs
+\[
+ A=(1/4,1/4,1/4),\quad B_1=(0,1/4,3/4),\quad
+ B_2=(3/4,0,1/4),\quad B_3=(1/4,3/4,0)
+\]
+is at least \(3/52\). The same lower bound holds for pointwise limits
+of generalized martingale mergers.
+\end{theorem}
+
+\section{Construction and precision}
+
+Let \(r:[0,\infty)\to[0,1]\) be a Borel cutoff and write
+\(a_i=r(x_i)\). Define
+\[
+ w_1=(1-a_2)a_3,\qquad
+ w_2=(1-a_3)a_1,\qquad
+ w_3=(1-a_1)a_2,\qquad
+ F(x)=1+\sum_{i=1}^3 (x_i-1)w_i .
+\]
+On Boolean inputs the map \(a\mapsto (w_1,w_2,w_3)\) is the Lugano
+(Ara\'ujo--Feix/Baumeler--Wolf) process \cite[Example~4 and Table~I]{bw}.
+Its explicit Boolean equations also appear in \cite[eq.~(2)]{kb}.
+Each weight ignores its own input. Each pair of Boolean flags
+requires opposite values of a shared bit, so at most one is active.
+More generally, expanding the two products gives
+\[
+ 1-\sum_{i=1}^3 w_i = a_1a_2a_3+(1-a_1)(1-a_2)(1-a_3)\geq0 .
+\]
+Thus \(F\) is a pointwise convex combination of \(1,x_1,x_2,x_3\).
+It is Borel, nonnegative and bounded by \(1+\sum_i x_i\).
+If the \(E_i\) are independent, \(E_i\) is independent of
+\(w_i=w_i(E_1,E_2,E_3)\). Since \(0\leq w_i\leq1\), the summands
+are integrable and
+\[
+ \mathbb E F(E_1,E_2,E_3)=
+  1+\sum_{i=1}^3 (\mathbb E E_i-1)\mathbb E w_i.
+\]
+This expression is at most one for e-variables and equals one if
+all three means are one.
+
+For the continuous example choose
+\(r(x)=\min\{1,\max\{0,2x-1/2\}\}\).
+It is zero up to \(1/4\), one from \(3/4\) onward, and linear in
+between. The hard cutoff \(r(x)=\mathbf{1}_{\{x>1/2\}}\) gives
+a second example with the same four witness values. At \(A\) all
+weights vanish, so \(F(A)=1\). At \(B_i\) exactly \(w_i=1\)
+and \(x_i=0\), so \(F(B_i)=0\).
+For either cutoff \(F(0,1/4,1/4)=1>F(0,1/4,3/4)=0\).
+In particular these examples lie outside the coordinatewise
+increasing restriction of Question 3 in \cite{vw}.
+
+\section{Four inputs rule out every mixture}
+
+For each deterministic strategy, its first index \(i\) and first
+fraction \(t\) are independent of the input vector, since there is
+no revealed history. Write \(W(x)\) for its terminal wealth.
+At \(A\) all later multipliers are at most one. Consequently
+\[
+ W(A)\leq c(1-3t/4)=c/4+(3/4)c(1-t)\leq1 .
+\]
+If a mixture had \(M(A)=F(A)=1\), this bound and nonnegativity would
+force \(c=1,t=0\) for almost all components. At \(B_i\), a component
+reading \(i\) first with no bet still has capital one after seeing
+the zero. Its other two inputs are strictly positive, so both
+multipliers and terminal wealth are strictly positive. The mixture
+requirement \(M(B_i)=0\) rules out positive probability for this
+first index. This holds for every \(i\), a contradiction.
+
+A quantitative form avoids the exact-equality assumption.
+At \(B_i\), for the same component starting with index \(i\),
+the first multiplier equals \(1-t\). The later multipliers
+are at least \(1/4\) and \(3/4\), in whichever order they occur,
+because a convex combination of one and \(x\leq1\) is at least \(x\).
+Hence
+\[
+ W(B_i)\geq (3/16)c(1-t).
+\]
+All other terminal values are nonnegative. Together,
+\[
+ W(A)\leq\tfrac14+4\sum_{j=1}^3W(B_j).
+\]
+Average this inequality over the fixed strategy law. This keeps the
+bound and replaces \(W\) with \(M\). All the evaluations are bounded
+by one on these inputs, so they are integrable.
+If the maximum error on the four points is \(\delta\), then
+\(1-\delta\leq M(A)\leq1/4+12\delta\), giving \(\delta\geq3/52\).
+Passing to a pointwise limit preserves the inequality because only
+four evaluations appear.
+
+\section{Admissibility and earlier work}
+
+Every precise independent e-merger is admissible among independent
+e-mergers by Ramdas and Wang \cite[Prop.~8.6]{rw}.
+For completeness, suppose a valid \(G\geq F\) has a strict inequality
+at a finite vector \(x\). For each coordinate choose
+\(q_i\in(0,1)\) small enough that \(q_i x_i<1\).
+Put probability \(q_i\) at \(x_i\) and the rest at
+\((1-q_i x_i)/(1-q_i)\). The independent product law has mean-one
+marginals and positive mass at \(x\). Under it, \(G\) has expectation
+strictly greater than one, contradicting validity. Thus
+domination by a generalized martingale merger would imply
+representation, already excluded by the four evaluations.
+
+Vovk and Wang's Example 4, credited there to Zhenyuan Zhang,
+already gives a two-input nondomination example. Precision is
+absent there. For its threshold \(h>1\), a constant-one first input
+and a second input taking \(h\) with probability \(1/h\) and zero
+otherwise have output mean \(1-1/h\).
+The known Lugano causal-game results distinguish the full
+multibit process from causally ordered channels.
+Here the statistical conclusion uses a scalar merger and the
+specific adaptive wealth law of \cite{vw}.
+The Boolean rule is prior work. The new question addressed
+here is the representation of its precise statistical readout.
+
+\section{Verification and disclosure}
+
+Internally reviewed, not peer reviewed. The rational replay checks
+the four evaluations, Boolean and fractional flag sums, product-law
+examples, and finite betting arithmetic. The partial Lean 4.30.0
+certificate checks an algebraic identity, witness evaluations,
+rational pathwise betting facts and the numerical inequality for
+the \(3/52\) bound. The expectation, admissibility and representation
+arguments are given in the text.
+
+Under human direction, ChatGPT Astra 6.2 (OpenAI) generated the
+discovery proof and its research packet. OpenAI Codex performed
+the independent mathematical review and developed the partial
+Lean certificate. GPT-6.2 Sol (OpenAI) checked the literature,
+derived the quantitative bound, and prepared the manuscript,
+replay and illustrations. DannyExperiments maintains the repository
+and is the preferred citation identity. No AI system is proposed
+as an author.
+
+\begin{thebibliography}{9}
+\bibitem{vw}
+V. Vovk and R. Wang, \emph{Merging sequential e-values via martingales},
+Electronic Journal of Statistics \textbf{18} (2024), 1185--1205.
+\href{https://doi.org/10.1214/24-EJS2228}{doi:10.1214/24-EJS2228}.
+\bibitem{rw}
+A. Ramdas and R. Wang, \emph{Hypothesis testing with e-values},
+Foundations and Trends in Statistics \textbf{1} (2025), 1--390.
+\href{https://doi.org/10.1561/3600000002}{doi:10.1561/3600000002}.
+\bibitem{bw}
+\"A. Baumeler and S. Wolf,
+\emph{The space of logically consistent classical processes without
+causal order}, New Journal of Physics \textbf{18} (2016), 013036.
+\href{https://doi.org/10.1088/1367-2630/18/1/013036}{doi:10.1088/1367-2630/18/1/013036}.
+\bibitem{kb}
+R. Kunjwal and \"A. Baumeler,
+\emph{Quantum nonlocality without entanglement through multipartite
+indefinite causal order}, Physical Review Letters \textbf{131}
+(2023), 120201.
+\href{https://doi.org/10.1103/PhysRevLett.131.120201}{doi:10.1103/PhysRevLett.131.120201}.
+\end{thebibliography}
+\end{document}

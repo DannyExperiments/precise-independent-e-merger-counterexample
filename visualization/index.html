@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Four inputs rule out a betting mixture</title>
+<style>
+:root {color-scheme:dark;--bg:#0e1821;--panel:#132532;--ink:#eef6fa;--muted:#b2c6d3;--line:#365468;--mint:#85dfc3;--amber:#ffc078}
+* {box-sizing:border-box}
+body {margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+main {width:min(100% - 2rem,51rem);margin:2rem auto 3rem}
+h1 {margin:0;font-size:clamp(1.9rem,6vw,3.15rem);line-height:1.12;letter-spacing:-.034em}
+header p,.muted {color:var(--muted)}
+section,details {margin:1.15rem 0;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:var(--panel)}
+h2 {margin:0 0 .45rem;font-size:1.14rem}
+p {margin:.55rem 0}
+.buttons {display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem}
+button {color:var(--ink);background:#20394a;border:1px solid var(--line);border-radius:.55rem;min-height:2.75rem;padding:.35rem .5rem;font:inherit;font-weight:630;cursor:pointer}
+button[aria-pressed=true] {background:var(--mint);color:#0c241d}
+button:focus-visible,input:focus-visible {outline:3px solid var(--amber);outline-offset:3px}
+.scene {display:grid;grid-template-columns:minmax(0,1fr) minmax(13.5rem,.8fr);gap:.75rem;margin-top:.75rem}
+canvas {display:block;background:#0b1720;width:100%;height:18rem;border-radius:.6rem}
+.readout {padding:.9rem;background:#0b1720;border:1px solid var(--line);border-radius:.6rem;overflow-wrap:anywhere}
+.readout output {display:block;color:var(--mint);font-size:1.35rem;font-weight:700}
+.readout output.zero,.witness-dot {color:var(--amber)}
+.legend {display:flex;gap:.8rem;flex-wrap:wrap;color:var(--muted);font-size:.89rem}
+.legend span:first-child {color:var(--mint)}
+.range {display:flex;gap:.6rem;align-items:center}
+input {accent-color:var(--mint);width:100%;min-height:2.75rem}
+summary {color:var(--mint);cursor:pointer;font-weight:680}
+@media (max-width:640px) {
+  main {margin-top:1.2rem} section,details {padding:.75rem}
+  .scene {display:flex;flex-direction:column} .readout {order:-1}
+  canvas {height:14rem}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Four inputs rule out a betting mixture</h1>
+<p>A precise merger of three independent e-values. Select a witness to see its exact values and the restriction it imposes on a strategy.</p>
+</header>
+<section aria-labelledby="example">
+<h2 id="example">Choose a witness</h2>
+<div class="buttons" role="group" aria-label="Witness">
+<button type="button" data-id="0" aria-pressed="true">A</button>
+<button type="button" data-id="1" aria-pressed="false">B1</button>
+<button type="button" data-id="2" aria-pressed="false">B2</button>
+<button type="button" data-id="3" aria-pressed="false">B3</button>
+</div>
+<div class="scene">
+<canvas id="cube" role="img" aria-label="Unit cube with four witness points, A selected"></canvas>
+<div class="readout" aria-live="polite">
+<h2 id="name">A · All inputs below 1</h2>
+<p id="point">(1/4, 1/4, 1/4)</p>
+<output id="value">Merger output 1</output>
+<p id="logic">Every bet can only decrease wealth on A. Matching the merger's value forces starting capital 1 and a zero first wager.</p>
+</div>
+</div>
+<label class="range" for="angle">Rotate<input id="angle" type="range" min="0" max="360" value="25" aria-label="Rotation angle"></label>
+<div class="legend"><span>● A</span><span class="witness-dot">● B1–B3</span><span>Ring marks the selected point.</span></div>
+</section>
+<details open>
+<summary>Why these four inputs suffice</summary>
+<p>At B<sub>i</sub> just the i-th input equals zero and the merger copies it. A strategy that first reads i with zero first wager retains its initial capital. The remaining inputs 1/4 and 3/4 are positive, so the terminal wealth stays positive.</p>
+<p>For any mixture M, the four evaluations obey <strong>M(A) ≤ 1/4 + 4(M(B1) + M(B2) + M(B3))</strong>. The displayed target has values 1, 0, 0, 0. Its maximum error from any mixture on this set is at least 3/52.</p>
+<p class="muted">The cube displays input coordinates, so camera rotation leaves the witness values fixed. The paper proves validity for arbitrary independent e-variables and credits the known Lugano selector.</p>
+</details>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const canvas=$("cube"), ctx=canvas.getContext("2d");
+const buttons=[...document.querySelectorAll("[data-id]")];
+const vertices=[];
+for(const x of [0,1])for(const y of [0,1])for(const z of [0,1])vertices.push([x,y,z]);
+const edges=[];
+for(let i=0;i<vertices.length;i++)for(let j=i+1;j<vertices.length;j++){
+  if(vertices[i].filter((v,k)=>v!==vertices[j][k]).length===1)edges.push([i,j]);
+}
+const points=[[.25,.25,.25],[0,.25,.75],[.75,0,.25],[.25,.75,0]];
+const labels=["A","B1","B2","B3"];
+const coordinates=["(1/4, 1/4, 1/4)","(0, 1/4, 3/4)","(3/4, 0, 1/4)","(1/4, 3/4, 0)"];
+let selected=0;
+function paint(){
+  const {width,height}=canvas.getBoundingClientRect();
+  const ratio=Math.min(devicePixelRatio||1,2);
+  canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.scale(ratio,ratio);
+  const angle=Number($("angle").value)*Math.PI/180,pitch=.42,scale=Math.min(width,height)*.67;
+  function project(point){
+    let [x,y,z]=point.map(v=>v-.5);
+    [x,z]=[x*Math.cos(angle)+z*Math.sin(angle),-x*Math.sin(angle)+z*Math.cos(angle)];
+    [y,z]=[y*Math.cos(pitch)-z*Math.sin(pitch),y*Math.sin(pitch)+z*Math.cos(pitch)];
+    const k=5/(5-z);
+    return [width/2+x*scale*k,height/2-y*scale*k,z];
+  }
+  const v=vertices.map(project);
+  const depth=([i,j])=>v[i][2]+v[j][2];
+  for(const edge of edges.slice().sort((a,b)=>depth(a)-depth(b))){
+    const [i,j]=edge;
+    ctx.strokeStyle=depth(edge)>0?"#5f859b":"#314b5d";
+    ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(v[i][0],v[i][1]);ctx.lineTo(v[j][0],v[j][1]);ctx.stroke();
+  }
+  const p=points.map(project);
+  function dot(i,active){
+    const [x,y]=p[i],color=i===0?"#85dfc3":"#ffc078";
+    ctx.beginPath();ctx.arc(x,y,active?12:6,0,Math.PI*2);
+    ctx.fillStyle="#0b1720";ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=color;ctx.stroke();
+    if(active){ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
+  }
+  p.map((_,i)=>i).sort((a,b)=>p[a][2]-p[b][2]).filter(i=>i!==selected).forEach(i=>dot(i,false));
+  dot(selected,true);
+}
+function select(i){
+  selected=i;
+  for(const [idx,button] of buttons.entries())button.setAttribute("aria-pressed",String(idx===i));
+  $("name").textContent=i===0?"A · All inputs below 1":labels[i]+" · Input "+i+" is zero";
+  $("point").textContent=coordinates[i];
+  $("value").textContent="Merger output "+(i===0?"1":"0");
+  $("value").classList.toggle("zero",i!==0);
+  $("logic").textContent=i===0?"Every bet can only decrease wealth on A. Matching the merger's value forces starting capital 1 and a zero first wager.":"If input "+i+" is read first, a zero wager leaves wealth unchanged. Positive wealth survives the other two reads.";
+  canvas.setAttribute("aria-label","Unit cube with four witness points, "+labels[i]+" selected");
+  paint();
+}
+for(const [i,button] of buttons.entries())button.addEventListener("click",()=>select(i));
+$("angle").addEventListener("input",paint);
+new ResizeObserver(paint).observe(canvas);
+select(0);
+</script>
+</body>
+</html>

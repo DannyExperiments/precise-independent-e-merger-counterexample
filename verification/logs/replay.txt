@@ -1,0 +1,4 @@
+hard: A, B1, B2, B3 = (Fraction(1, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)); 27 precise and 64 valid product-law checks
+ramp: A, B1, B2, B3 = (Fraction(1, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)); 27 precise and 64 valid product-law checks
+Lugano truth table, 125 fractional weight triples, and exact gap arithmetic passed
+M(A) <= 1/4 + 4 Σ M(B_i); four-point maximum error >= 3/52
